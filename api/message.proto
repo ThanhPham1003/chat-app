@@ -1,0 +1,31 @@
+syntax = "proto3";
+package message;
+option go_package = "github.com/ThanhPham1003/chat-app/pkg/proto/message";
+
+service MessageService {
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+  rpc StreamMessages(StreamMessagesRequest) returns (stream Message);
+}
+
+message SendMessageRequest {
+  string sender_id = 1;
+  string receiver_id = 2;
+  string content = 3;
+}
+
+message SendMessageResponse {
+  string message_id = 1;
+  string message = 2;
+}
+
+message StreamMessagesRequest {
+  string user_id = 1;
+}
+
+message Message {
+  string message_id = 1;
+  string sender_id = 2;
+  string receiver_id = 3;
+  string content = 4;
+  string timestamp = 5;
+}

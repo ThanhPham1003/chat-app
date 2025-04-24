@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  user-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SERVICE=user-service
+    ports:
+      - "50051:50051"
+  message-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SERVICE=message-service
+    ports:
+      - "50052:50052"
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: chat_app
+      POSTGRES_USER: phamthanh
+      POSTGRES_PASSWORD: yourpassword
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
