@@ -2,9 +2,21 @@ syntax = "proto3";
 package user;
 option go_package = "github.com/ThanhPham1003/chat-app/pkg/proto/user";
 
+import "google/api/annotations.proto";
+
 service UserService {
-  rpc Register(RegisterRequest) returns (RegisterResponse);
-  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/register"
+      body: "*"
+    };
+  }
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/login"
+      body: "*"
+    };
+  }
 }
 
 message RegisterRequest {

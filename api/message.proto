@@ -2,9 +2,18 @@ syntax = "proto3";
 package message;
 option go_package = "github.com/ThanhPham1003/chat-app/pkg/proto/message";
 
+import "google/api/annotations.proto";
+
 service MessageService {
-  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
-  rpc StreamMessages(StreamMessagesRequest) returns (stream Message);
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {
+    option (google.api.http) = {
+      post: "/send-message"
+      body: "*"
+    };
+  }
+  rpc StreamMessages(StreamMessagesRequest) returns (stream Message) {
+    // Streaming is not easily mapped to REST; we'll handle it separately
+  }
 }
 
 message SendMessageRequest {
@@ -14,18 +23,18 @@ message SendMessageRequest {
 }
 
 message SendMessageResponse {
-  string message_id = 1;
-  string message = 2;
+string message_id = 1;
+string message = 2;
 }
 
 message StreamMessagesRequest {
-  string user_id = 1;
+string user_id = 1;
 }
 
 message Message {
-  string message_id = 1;
-  string sender_id = 2;
-  string receiver_id = 3;
-  string content = 4;
-  string timestamp = 5;
+string message_id = 1;
+string sender_id = 2;
+string receiver_id = 3;
+string content = 4;
+string timestamp = 5;
 }

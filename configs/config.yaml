@@ -8,3 +8,10 @@ redis:
   addr: localhost:6379
 jwt:
   secret: secret-key
+services:
+  user:
+    grpc_addr: "localhost:50051"
+    http_addr: ":8080"
+  message:
+    grpc_addr: "localhost:50052"
+    http_addr: ":8081"

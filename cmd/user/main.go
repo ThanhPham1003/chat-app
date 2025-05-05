@@ -1,13 +1,17 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net"
+	"net/http"
 
 	"github.com/ThanhPham1003/chat-app/internal/db"
 	"github.com/ThanhPham1003/chat-app/internal/user"
-	proto "github.com/ThanhPham1003/chat-app/pkg/proto/user"
+	userProto "github.com/ThanhPham1003/chat-app/pkg/proto/user"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
@@ -20,14 +24,37 @@ func main() {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 	db.AutoMigrate(&user.User{})
-	lis, err := net.Listen("tcp", ":50051")
+
+	// Start gRPC server
+	grpcLis, err := net.Listen("tcp", config.Services.User.GrpcAddr)
 	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
+		log.Fatalf("Failed to listen (gRPC): %v", err)
 	}
-	s := grpc.NewServer()
-	proto.RegisterUserServiceServer(s, user.NewServer(db, config))
-	log.Println("User service running on :50051")
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("Failed to serve: %v", err)
+	grpcServer := grpc.NewServer()
+	userProto.RegisterUserServiceServer(grpcServer, user.NewServer(db, config))
+
+	ctx := context.Background()
+	mux := runtime.NewServeMux()
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
+	err = userProto.RegisterUserServiceHandlerFromEndpoint(ctx, mux, config.Services.User.GrpcAddr, opts)
+	if err != nil {
+		log.Fatalf("Failed to register gateway: %v", err)
 	}
+
+	// Run servers concurrently
+	go func() {
+		log.Printf("Message service (gRPC) running on %s", config.Services.User.GrpcAddr)
+		if err := grpcServer.Serve(grpcLis); err != nil {
+			log.Fatalf("Failed to serve gRPC: %v", err)
+		}
+	}()
+	go func() {
+		log.Printf("Message service (HTTP) running on %s", config.Services.User.HttpAddr)
+		if err := http.ListenAndServe(config.Services.User.HttpAddr, mux); err != nil {
+			log.Fatalf("Failed to serve HTTP: %v", err)
+		}
+	}()
+
+	// Block forever
+	select {}
 }

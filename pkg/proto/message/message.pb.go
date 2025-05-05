@@ -7,6 +7,7 @@
 package message
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -257,7 +258,7 @@ var File_message_proto protoreflect.FileDescriptor
 
 const file_message_proto_rawDesc = "" +
 	"\n" +
-	"\rmessage.proto\x12\amessage\"l\n" +
+	"\rmessage.proto\x12\amessage\x1a\x1cgoogle/api/annotations.proto\"l\n" +
 	"\x12SendMessageRequest\x12\x1b\n" +
 	"\tsender_id\x18\x01 \x01(\tR\bsenderId\x12\x1f\n" +
 	"\vreceiver_id\x18\x02 \x01(\tR\n" +
@@ -276,10 +277,10 @@ const file_message_proto_rawDesc = "" +
 	"\vreceiver_id\x18\x03 \x01(\tR\n" +
 	"receiverId\x12\x18\n" +
 	"\acontent\x18\x04 \x01(\tR\acontent\x12\x1c\n" +
-	"\ttimestamp\x18\x05 \x01(\tR\ttimestamp2\xa0\x01\n" +
-	"\x0eMessageService\x12H\n" +
-	"\vSendMessage\x12\x1b.message.SendMessageRequest\x1a\x1c.message.SendMessageResponse\x12D\n" +
-	"\x0eStreamMessages\x12\x1e.message.StreamMessagesRequest\x1a\x10.message.Message0\x01B5Z3github.com/ThanhPham1003/chat-app/pkg/proto/messageb\x06proto3"
+	"\ttimestamp\x18\x05 \x01(\tR\ttimestamp2\xbc\x01\n" +
+	"\x0eMessageService\x12b\n" +
+	"\vSendMessage\x12\x1b.message.SendMessageRequest\x1a\x1c.message.SendMessageResponse\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/send-message\x12F\n" +
+	"\x0eStreamMessages\x12\x1e.message.StreamMessagesRequest\x1a\x10.message.Message\"\x000\x01B5Z3github.com/ThanhPham1003/chat-app/pkg/proto/messageb\x06proto3"
 
 var (
 	file_message_proto_rawDescOnce sync.Once

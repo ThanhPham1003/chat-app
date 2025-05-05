@@ -7,6 +7,7 @@
 package user
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -234,7 +235,7 @@ var File_user_proto protoreflect.FileDescriptor
 const file_user_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"user.proto\x12\x04user\"I\n" +
+	"user.proto\x12\x04user\x1a\x1cgoogle/api/annotations.proto\"I\n" +
 	"\x0fRegisterRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"E\n" +
@@ -246,10 +247,10 @@ const file_user_proto_rawDesc = "" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"?\n" +
 	"\rLoginResponse\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2z\n" +
-	"\vUserService\x129\n" +
-	"\bRegister\x12\x15.user.RegisterRequest\x1a\x16.user.RegisterResponse\x120\n" +
-	"\x05Login\x12\x12.user.LoginRequest\x1a\x13.user.LoginResponseB2Z0github.com/ThanhPham1003/chat-app/pkg/proto/userb\x06proto3"
+	"\amessage\x18\x02 \x01(\tR\amessage2\xa3\x01\n" +
+	"\vUserService\x12O\n" +
+	"\bRegister\x12\x15.user.RegisterRequest\x1a\x16.user.RegisterResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/register\x12C\n" +
+	"\x05Login\x12\x12.user.LoginRequest\x1a\x13.user.LoginResponse\"\x11\x82\xd3\xe4\x93\x02\v:\x01*\"\x06/loginB2Z0github.com/ThanhPham1003/chat-app/pkg/proto/userb\x06proto3"
 
 var (
 	file_user_proto_rawDescOnce sync.Once
